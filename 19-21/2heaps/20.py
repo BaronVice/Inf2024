@@ -14,10 +14,10 @@ answers = []
 # Количество в первой куче
 first = 12
 
-def check_if_vanya_loses(values):
+def check_if_vanya_loses(petya1):
     global target
-    # values - первый ход Пети, если одним из них он приведет Ваню к поражению, то подобранный number нам подходит
-    for value in values:
+    # petya1 - первый ход Пети, если одним из них он приведет Ваню к поражению, то подобранный number нам подходит
+    for value in petya1:
         # Все ходы, при которых Петя выигрывает первым ходом не рассматриваем (по условию)
         if sum(value) >= target:
             continue
@@ -28,7 +28,7 @@ def check_if_vanya_loses(values):
             continue
 
         # Ваня делает ход (возможные варианты)
-        vars = [
+        vanya1 = [
             [value[0] + 1, value[1]],
             [value[0] * 2, value[1]],
             [value[0], value[1] + 1],
@@ -37,7 +37,7 @@ def check_if_vanya_loses(values):
 
         # Проверим, что Ваня при любом своем ходе приведет Петю к победе 
         # (если хотя бы одним Петя не достигнет победы, то смотрим другие ходы Пети)
-        if all(max(var) * 2 + min(var) >= target for var in vars):
+        if all(max(var) * 2 + min(var) >= target for var in vanya1):
             return True
 
 

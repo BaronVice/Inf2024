@@ -14,15 +14,15 @@ answers = []
 # Количество в первой куче
 first = 12
 
-def check_if_vanya_wins(values):
+def check_if_vanya_wins(petya1):
     global target
     # Все ходы, при которых Петя выигрывает отбрасываем (используем, если в задаче просят найти максимальный number, здесь он не нужен)
-    for i in range(len(values)):
-        if sum(values[i]) >= target:
-            values[i][0] = -1000
+    for i in range(len(petya1)):
+        if sum(petya1[i]) >= target:
+            petya1[i][0] = -1000
 
     # Проверим, что Ваня победит (один из ходов Пети ведет его к поражению)
-    for pair in values:
+    for pair in petya1:
         high, low = max(pair), min(pair)
         # Получаем максимальную сумму удваивая кучу с наибольшим количеством камней
         if high * 2 + low >= target:

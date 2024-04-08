@@ -26,9 +26,12 @@ def check_if_vanya_wins(value):
     ]
 
     # Ваня может победить и первым ходом, проверим
-    if any([sum(var) >= target] for var in vanya1):
-        print([sum(var) for var in vanya1])
-        return True
+    for var in vanya1:
+        if sum(var) >= target:
+            return True
+    # Еще это можно записать как
+    # if any([sum(var) >= target for var in vanya1]):
+    #   return True
 
     for var in vanya1:
         # Проверим, что Петя не победит вторым ходом
@@ -44,7 +47,7 @@ def check_if_vanya_wins(value):
         ]
 
         # Ваня сейчас должен победить при любом ходе Пети
-        if all([sum(max(pair) * 2 + min(pair)) >= target] for pair in petya2):
+        if all([max(pair) * 2 + min(pair) >= target for pair in petya2]):
             # Один из ходов Вани привел его к победе
             return True
     
@@ -52,20 +55,20 @@ def check_if_vanya_wins(value):
     return False
 
 
-def check_if_petya_loses(values):
+def check_if_petya_loses(petya1):
     global target
 
     # Проверим, что Петя не выиграл первым ходом
-    if max([sum(value) for value in values]) >= target:
+    if max([sum(value) for value in petya1]) >= target:
         return False
 
     # И проверим, что Ваня не может гарантированно выиграть первым ходом (по условию)
-    if min([max(value) * 2 + min(value) for value in values]) >= target:
+    if min([max(value) * 2 + min(value) for value in petya1]) >= target:
         return False
 
-    # values - первый ход Пети, любой его ход при правильном следующем ходе Вани приведет Петю к поражению 
+    # petya1 - первый ход Пети, любой его ход при правильном следующем ходе Вани приведет Петю к поражению 
     # Проверим это
-    return all([check_if_vanya_wins(value) for value in values])
+    return all([check_if_vanya_wins(value) for value in petya1])
 
 
 # Перебираем количество камней во второй куче
