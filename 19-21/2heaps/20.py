@@ -37,8 +37,15 @@ def check_if_vanya_loses(petya1):
 
         # Проверим, что Ваня при любом своем ходе приведет Петю к победе 
         # (если хотя бы одним Петя не достигнет победы, то смотрим другие ходы Пети)
-        if all(max(var) * 2 + min(var) >= target for var in vanya1):
-            return True
+        # if all(max(var) * 2 + min(var) >= target for var in vanya1):
+        #     return True
+        
+        fl = True
+        for var in vanya1:
+            if max(var) * 2 + min(var) < target:
+                fl = False
+
+        if fl: return True
 
 
 # Перебираем количество камней во второй куче

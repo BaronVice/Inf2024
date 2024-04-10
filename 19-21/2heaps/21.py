@@ -47,8 +47,12 @@ def check_if_vanya_wins(value):
         ]
 
         # Ваня сейчас должен победить при любом ходе Пети
-        if all([max(pair) * 2 + min(pair) >= target for pair in petya2]):
-            # Один из ходов Вани привел его к победе
+        combinations = 0
+        for var in petya2:
+            if max(var) * 2 + min(var) >= target:
+                combinations += 1
+        # Все комбинации привели Ваню к победе - значение подходит
+        if combinations == len(petya2):
             return True
     
     # Иначе не подходит
@@ -59,16 +63,28 @@ def check_if_petya_loses(petya1):
     global target
 
     # Проверим, что Петя не выиграл первым ходом
-    if max([sum(value) for value in petya1]) >= target:
-        return False
+    for value in petya1:
+        if sum(value) >= target:
+            return False
 
     # И проверим, что Ваня не может гарантированно выиграть первым ходом (по условию)
-    if min([max(value) * 2 + min(value) for value in petya1]) >= target:
+    combinations = 0
+    for value in petya1:
+        if max(value) * 2 + min(value) >= target:
+            combinations += 1
+    # Все комбинации первого хода Пети привели Ваню к победе первым ходом -> не подходит по условию
+    if combinations == len(petya1):
         return False
 
     # petya1 - первый ход Пети, любой его ход при правильном следующем ходе Вани приведет Петю к поражению 
     # Проверим это
-    return all([check_if_vanya_wins(value) for value in petya1])
+    for value in petya1:
+        # Один из первых ходов Пети не позволяет Ване выиграть первым или вторым ходом
+        if not check_if_vanya_wins(value):
+            return False
+        
+    # Иначе независимо от ходов Пети Ваня имеет выигрышную стратегию - подходит
+    return True
 
 
 # Перебираем количество камней во второй куче
